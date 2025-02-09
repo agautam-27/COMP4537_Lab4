@@ -27,6 +27,14 @@ const server = http.createServer((req, res) => {
     const pathname = parsedUrl.pathname;
     const query = parsedUrl.query;
 
+    if (req.method === "GET" && pathname === "/api/definitions/all") {
+        return sendResponse(res, 200, {
+            requestNumber: requestCount,
+            totalWords: Object.keys(dictionary).length,
+            dictionary: dictionary
+        });
+    }
+
     // Handle GET request for retrieving a word definition
     if (req.method === "GET" && pathname.startsWith("/api/definitions")) {
         if (!query.word) {
