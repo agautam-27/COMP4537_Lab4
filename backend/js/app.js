@@ -15,11 +15,11 @@ let requestCount = 0;
 
 // Create HTTP server
 const server = http.createServer((req, res) => {
-    setCorsHeaders(res);  // Apply CORS headers
+    setCorsHeaders(res);  
 
     if (req.method === "OPTIONS") {
         res.writeHead(204);
-        return res.end();  // Handle preflight request
+        return res.end();  
     }
 
     requestCount++;
@@ -77,11 +77,17 @@ const server = http.createServer((req, res) => {
                     });
                 }
 
+                const totalWords = Object.keys(dictionary).length;
+
+                const options = { month: "short", day: "numeric", year: "numeric" };
+                const formattedDate = new Date().toLocaleDateString("en-US", options);
+
                 dictionary[word] = definition;
                 return sendResponse(res, 201, { 
                     requestNumber: requestCount,
-                    totalWords: Object.keys(dictionary).length,
-                    message: messages.newEntry(word, definition, requestCount, Object.keys(dictionary).length)
+                    totalWords: totalWords,
+                    message: messages.newEntry(word, definition, requestCount, totalWords, formattedDate)
+
                 });
 
             } catch (error) {
