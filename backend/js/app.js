@@ -81,7 +81,7 @@ const server = http.createServer((req, res) => {
                 return sendResponse(res, 201, { 
                     requestNumber: requestCount,
                     totalWords: Object.keys(dictionary).length,
-                    message: messages.newEntry(word, definition)
+                    message: messages.newEntry(word, definition, requestCount, Object.keys(dictionary).length)
                 });
 
             } catch (error) {
